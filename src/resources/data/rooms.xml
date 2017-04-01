@@ -1,4 +1,14 @@
 <rooms>
+    <room>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row>111</row>
+        <row>111111111111111111111111111111111</row>
+        <todd x="15" y="0"/>
+    </room>
 	<room>
         <row/>
         <row/>
@@ -8,18 +18,9 @@
         <row/>
         <row>111111</row>
 		<row>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</row>
-        <changeroom x="5" y="3" destRoom="2" destx="0" desty="0"/>
+        <changeroom x="5" y="3" destRoom="1" destx="0" desty="0"/>
         <npc x="5" y="0" anim="player">
             <text>NPC DIALOGUE 1</text>
         </npc>
 	</room>
-    <room>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row>111</row>
-        <row>111111111111111111111111111111111</row>
-    </room>
 </rooms>

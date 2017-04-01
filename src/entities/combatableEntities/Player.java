@@ -1,33 +1,37 @@
-package entities;
+package entities.combatableEntities;
 
 import graphics.Assets;
 import utils.KeyManager;
 import utils.Preferences;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class Player extends Entity {
+public class Player extends CombatableEntity {
 
 	private static Player instance = new Player();
 
 	public static Player getInstance(){ return instance; }
 
 	private Player() {
-		super(0, 0, Assets.getEntityWalkingAnimation("player"));
+		super(0, 0, Assets.getEntityAnimation("player"), Assets.getEntityAnimation("playerAttack"));
 	}
 
 	@Override
 	public void update(){
 		super.update();
 		setPlayerMovement();
-		currentFrame = getCurrentAnimationFrame();
-		//System.out.println(getXInTiles() +", "+ getYInTiles());
-		move();
+		if(attacking)
+			currentFrame = getCurrentAttackAnimationFrame();
+		else
+			currentFrame = getCurrentAnimationFrame();
+		if(!attacking && KeyManager.checkKeyAndReset(KeyEvent.VK_E))
+			attack(1);
+
+
 	}
 
 	@Override
-	public void draw(Graphics2D graphics) {
-		super.draw(graphics);
+	public void defeat() {
+		System.out.println("Game over");
 	}
 
 	/**
@@ -39,8 +43,8 @@ public class Player extends Entity {
 		int UP = KeyEvent.VK_UP, LEFT = KeyEvent.VK_LEFT, RIGHT = KeyEvent.VK_RIGHT;
 
 		if(grounded)
-			if (KeyManager.checkKeyWithoutReset(W) || KeyManager.checkKeyWithoutReset(UP))
-				YSpd = -4 * Preferences.scale;
+			if (KeyManager.checkKeyWithoutReset(W) || KeyManager.checkKeyWithoutReset(UP) || KeyManager.checkKeyWithoutReset(KeyEvent.VK_SPACE))
+				jump();
 
 		if(KeyManager.checkKeyWithoutReset(A) || KeyManager.checkKeyWithoutReset(LEFT))
 			XSpd = -3 * Preferences.scale;
@@ -48,12 +52,7 @@ public class Player extends Entity {
 			XSpd = 3 * Preferences.scale;
 
 		if(KeyManager.checkKeyWithoutReset(KeyEvent.VK_SHIFT)){
-			XSpd *= 3;
+			XSpd *= 2;
 		}
-		/*if(keys[KeyEvent.VK_SHIFT] &&
-				keys[KeyEvent.VK_SPACE]){
-			XSpd *= 5;
-			YSpd *= 5;
-		}*/
 	}
 }

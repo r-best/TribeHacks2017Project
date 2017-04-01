@@ -1,5 +1,7 @@
 package entities;
 
+import entities.combatableEntities.Player;
+import entities.combatableEntities.ToddHoward;
 import graphics.Animation;
 import graphics.Camera;
 import rooms.RoomManager;
@@ -66,16 +68,21 @@ public abstract class Entity {
 	public void draw(Graphics2D graphics){
 		graphics.drawImage(currentFrame, (int)(x + Camera.getXOffset()), (int)(y + Camera.getYOffset()), null);
 		//draw hitbox (for debugging)
-		graphics.fillRect(bounds.x + (int)Camera.getXOffset(), bounds.y + (int)Camera.getYOffset(), bounds.width, bounds.height);
+		//graphics.fillRect(bounds.x + (int)Camera.getXOffset(), bounds.y + (int)Camera.getYOffset(), bounds.width, bounds.height);
+	}
+
+	public void jump(){
+		YSpd = -10 * Preferences.scale;
 	}
 
 	public void move(){
 		if(XSpd != 0 || YSpd != 0) {
 			moveX();
 			moveY();
-			XSpd = 0;
+			if(!(this instanceof ToddHoward))
+				XSpd = 0;
 			if(!grounded)
-				YSpd += .07;
+				YSpd += .4 * Preferences.scale;
 			bounds.x = (int) x + boundsXOffset;
 			bounds.y = (int) y + boundsYOffset;
 		}
@@ -143,6 +150,7 @@ public abstract class Entity {
 				if(collidesWithAnEntity()){
 					y -= YSpd;
 					bounds.y -= YSpd;
+					grounded = true;
 				}
 			}
 			else{
@@ -206,67 +214,26 @@ public abstract class Entity {
 
 		//This code really sucks, I need to figure out a better way to detect if the player is in range
 
-		//player is above & to left
-		if((px > x - pwidth - 10 && px < x) &&
-				(py > y - pheight - 10 && py < y)){
-			//System.out.println("UP/LEFT");
-			if(pdirection == 3 || pdirection == 0)
-				return true;
-		}
-		//player is above & to right
-		else if((px > x + width && px < x + width + pwidth) &&
-				(py > y - pheight - 10 && py < y)){
-			//System.out.println("UP/RIGHT");
-			if(pdirection == 3 || pdirection == 2)
-				return true;
-		}
-		//player is down & to left
-		else if((px > x - pwidth - 10 && px < x) &&
-				(py > y + height && py < y + height + pheight + 10)){
-			//System.out.println("DOWN/LEFT");
-			if(pdirection == 1 || pdirection == 0)
-				return true;
-		}
-		//player is down & to right
-		else if((px > x + width && px < x + width + pwidth) &&
-				(py > y + height && py < y + height + pheight + 10)){
-			//System.out.println("DOWN/RIGHT");
-			if(pdirection == 1 || pdirection == 2)
-				return true;
-		}
-
-		//player is above
-		else if((px >= x && px <= x + width) &&
-				(py >= y - pheight - 10 && py <= y)){
-			//System.out.println("UP");
-			if(pdirection == 3)
-				return true;
-		}
-		//player is below
-		else if((px >= x && px <= x + width) &&
-				(py >= y + height && py <= y + height + pheight + 10)){
-			//System.out.println("DOWN");
-			if(pdirection == 1)
-				return true;
-		}
 		//player is to the left
-		else if((px >= x - pwidth - 10 && px <= x) &&
-				(py >= y && py <= y + height)){
-			//System.out.println("LEFT");
-			if(pdirection == 0)
+		if((px >= x - pwidth - 10 && px <= x) &&
+				(py >= y-height/2 && py <= y + height/2)){
+			if(pdirection == 0) {
+				//System.out.println("LEFT");
 				return true;
+			}
 		}
 		//player is to the right
-		else if((px >= x + width && px <= x + width + pwidth) &&
-				(py >= y && py <= y + height)){
-			//System.out.println("RIGHT");
-			if(pdirection == 2)
+		else if((px >= x + width/2 && px <= x + width + pwidth) &&
+				(py >= y-height/2 && py <= y + height/2)){
+			if(pdirection == 1) {
+				//System.out.println("RIGHT");
 				return true;
+			}
 		}
 
-		/*else{
-			System.out.println("NONE");
-		}*/
+		else{
+			//System.out.println("NONE");
+		}
 		return false;
 	}
 

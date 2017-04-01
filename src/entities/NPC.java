@@ -35,9 +35,9 @@ public class NPC extends Entity {
 
 		if(movingTimer > 0){
 			if(direction)
-				XSpd = 3;
+				XSpd = 3 * Preferences.scale;
 			else
-				XSpd = -3;
+				XSpd = -3 * Preferences.scale;
 			movingTimer--;
 		}
 	}

@@ -6,7 +6,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import entities.Player;
+import entities.combatableEntities.Player;
 import events.ChangeRoomEvent;
 import events.Event;
 import org.w3c.dom.Element;

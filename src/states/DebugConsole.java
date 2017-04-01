@@ -77,9 +77,9 @@ public class DebugConsole implements State{
 					break;
 				}
 				if(tokens.length >= 5)
-					RoomManager.getRoom().getEntities().add(new NPC(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Assets.getEntityWalkingAnimation(tokens[4])));
+					RoomManager.getRoom().getEntities().add(new NPC(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Assets.getEntityAnimation(tokens[4])));
 				else
-					RoomManager.getRoom().getEntities().add(new NPC(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Assets.getEntityWalkingAnimation("npc")));
+					RoomManager.getRoom().getEntities().add(new NPC(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Assets.getEntityAnimation("npc")));
 				showMessage("Spawned " +tokens[1]);
 				break;
 			default:

@@ -7,6 +7,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import entities.combatableEntities.ToddHoward;
 import events.*;
 import events.Event;
 import graphics.Assets;
@@ -80,9 +81,12 @@ public class EntityManager {
 					case "npc":
 						addEntity(new NPC(Integer.parseInt(entity.getAttribute("x")),
 								Integer.parseInt(entity.getAttribute("y")),
-								Assets.getEntityWalkingAnimation(entity.getAttribute("anim")),
+								Assets.getEntityAnimation(entity.getAttribute("anim")),
 								events));
 						break;
+					case "todd":
+						addEntity(new ToddHoward(Integer.parseInt(entity.getAttribute("x")),
+								Integer.parseInt(entity.getAttribute("y"))));
 				}
 			}
 		}

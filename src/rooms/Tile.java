@@ -1,6 +1,6 @@
 package rooms;
 
-import entities.Player;
+import entities.combatableEntities.Player;
 import events.Event;
 import graphics.Assets;
 
@@ -73,7 +73,6 @@ public class Tile {
 	}
 
 	public void update(int x, int y){
-		System.out.println(x + ", "+y);
 		if(!walkOverEvents.isEmpty() && Player.getInstance().getBounds().intersects(new Rectangle(x*Tile.width, y*Tile.height, Tile.width, Tile.height)))
 			walkOverEvents.get(0).trigger();
 

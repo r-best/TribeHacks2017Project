@@ -4,10 +4,8 @@ import graphics.Camera;
 import rooms.RoomManager;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
-import entities.Player;
-import utils.KeyManager;
+import entities.combatableEntities.Player;
 
 public class GameState implements State {
 
