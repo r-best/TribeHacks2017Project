@@ -9,6 +9,9 @@
         <row>111111</row>
 		<row>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</row>
         <changeroom x="5" y="3" destRoom="2" destx="0" desty="0"/>
+        <npc x="5" y="0" anim="player">
+            <text>NPC DIALOGUE 1</text>
+        </npc>
 	</room>
     <room>
         <row/>

@@ -1,0 +1,3 @@
+gamewidth=1600
+gameheight=1200
+textSpd=warpspeed
