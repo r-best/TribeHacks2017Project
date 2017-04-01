@@ -4,18 +4,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import entities.Entity;
 import entities.EntityManager;
-import graphics.Camera;
-import Game.Game;
 
 public class Room {
 
 	protected boolean initialized = false;
 	protected int width, height;
-	protected byte[][] tiles;
+	protected Tile[][] tiles;
 	private EntityManager entities;
-
-	public Room(){
-	}
 
 	public void entityInit(int roomNum){
 		entities = new EntityManager(roomNum);
@@ -23,18 +18,30 @@ public class Room {
 	}
 
 	public void update(){
+		for(int i = 0; i < width; i++){
+			for(int j = 0; j < height; j++){
+				tiles[i][j].update(i, j);
+			}
+		}
+
 		entities.update();
 	}
 
 	public void draw(Graphics2D graphics){
-		int xStart = /*0;*/ (int)Math.min(0, Camera.getXOffset() / Tile.width);
-		int xEnd = /*width;*/ (int)Math.max(width, (Camera.getXOffset() - Game.getGameWidth()) / Tile.width + 1);
-		int yStart = /*0;*/ (int)Math.min(0, Camera.getYOffset() / Tile.height);
-		int yEnd = /*height;*/ (int)Math.max(height, (Camera.getYOffset() - Game.getGameHeight()) / Tile.height + 1);
+//		int xStart = /*0;*/ (int)Math.min(0, Camera.getXOffset() / Tile.width);
+//		int xEnd = /*width;*/ (int)Math.max(width, (Camera.getXOffset() - Game.getGameWidth()) / Tile.width + 1);
+//		int yStart = /*0;*/ (int)Math.min(0, Camera.getYOffset() / Tile.height);
+//		int yEnd = /*height;*/ (int)Math.max(height, (Camera.getYOffset() - Game.getGameHeight()) / Tile.height + 1);
+//
+//		for(int y = yStart; y < yEnd;y++){
+//			for(int x = xStart; x < xEnd; x++){
+//				getTile(x, y).draw(graphics, (int)(x * Tile.width + Camera.getXOffset()), (int)(y * Tile.height + Camera.getYOffset()));
+//			}
+//		}
 
-		for(int y = yStart; y < yEnd;y++){
-			for(int x = xStart; x < xEnd; x++){
-				getTile(x, y).draw(graphics, (int)(x * Tile.width + Camera.getXOffset()), (int)(y * Tile.height + Camera.getYOffset()));
+		for(int i = 0; i < width; i++){
+			for(int j = 0; j < height; j++){
+				tiles[i][j].draw(graphics, i, j);
 			}
 		}
 
@@ -49,14 +56,15 @@ public class Room {
 	 */
 	public Tile getTile(int x, int y){
 		if(x < 0 || y < 0 || x >= width || y >= height){
-			return Tile.tiles[0];
+			return Tile.tileData[0];
 		}
 
-		Tile t = Tile.tiles[tiles[x][y]];
+		/*Tile t = Tile.tileData[tiles[x][y]];
 		if(t == null){
-			return Tile.tiles[0];
+			return Tile.tileData[0];
 		}
-		return t;
+		return t;*/
+		return tiles[x][y];
 	}
 
 	public ArrayList<Entity> getEntities(){

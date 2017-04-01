@@ -7,6 +7,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import entities.Player;
+import events.ChangeRoomEvent;
+import events.Event;
 import org.w3c.dom.Element;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -47,13 +49,36 @@ public class RoomManager {
 					if(rooms[i].tiles == null){
 						rooms[i].height = rows.getLength();
 						rooms[i].width = roomWidth;
-						rooms[i].tiles = new byte[rooms[i].width][rooms[i].height];
+						rooms[i].tiles = new Tile[rooms[i].width][rooms[i].height];
 					}
 
-					for(int k = 0; k < row.length(); k++){
-						rooms[i].tiles[k][j] = Byte.parseByte(row.substring(k, k+1));
+					for(int k = 0; k < rooms[i].width; k++){
+						if(k > row.length()-2)
+							rooms[i].tiles[k][j] = new Tile(Tile.tileData[0]);
+						else
+							rooms[i].tiles[k][j] = new Tile(Tile.tileData[Integer.parseInt(row.substring(k, k+1))]);//Byte.parseByte(row.substring(k, k+1));
 					}
 				}
+
+				/*NodeList tileEvents = document.getElementsByTagName("*");
+				for(int j = 0; j < tileEvents.getLength(); j++){
+					Element event = (Element)tileEvents.item(j);
+
+					boolean triggerOnButton = false;
+					if("button".equals(event.getAttribute("trigger")))
+						triggerOnButton = true;
+
+					switch(event.getTagName()){
+						case "changeroom":
+							Tile t = rooms[i].getTile(Integer.parseInt(event.getAttribute("x")), Integer.parseInt(event.getAttribute("y")));
+							Event e = new ChangeRoomEvent(Integer.parseInt(event.getAttribute("destRoom")), Integer.parseInt(event.getAttribute("destx")), Integer.parseInt(event.getAttribute("desty")));
+							if(triggerOnButton)
+								t.addKeyPressEvent(e);
+							else
+								t.addWalkOverEvent(e);
+							break;
+					}
+				}*/
 			}
 		}
 		catch(ParserConfigurationException e){

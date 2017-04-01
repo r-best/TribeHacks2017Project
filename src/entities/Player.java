@@ -21,7 +21,6 @@ public class Player extends Entity {
 		super.update();
 		setPlayerMovement();
 		currentFrame = getCurrentAnimationFrame();
-		System.out.println(grounded);
 		move();
 	}
 

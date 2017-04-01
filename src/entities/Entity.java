@@ -17,7 +17,7 @@ public abstract class Entity {
 	protected Rectangle bounds;
 	public int boundsXOffset, boundsYOffset; //used to shrink the bounds Rectangle into the entity, to reduce the size of the hitbox
 	protected int width, height;
-	public float x, y; //stored in PIXELS, not tiles
+	public float x, y; //stored in PIXELS, not tileData
 	protected double XSpd = 0, YSpd = -1;
 	public boolean isSolid = true; //to determine if other entities can collide with this entity (true by default, subclass must define as false)
 
@@ -30,8 +30,8 @@ public abstract class Entity {
 	protected boolean grounded = false;
 
 	/**
-	 * @param x starting X position in tiles
-	 * @param y starting Y position in tiles
+	 * @param x starting X position in tileData
+	 * @param y starting Y position in tileData
 	 */
 	public Entity(int x, int y, Animation[] anims, ArrayList<Event> events){
 		this.x = x * Tile.width;
@@ -296,9 +296,10 @@ public abstract class Entity {
 	 * @param y Y Tile coordinate of tile
 	 * @return the isSolid() value of the tile at the (X, Y) tile coordinate of the room
 	 */
-	protected boolean collisionWithTile(int x, int y){
+	public boolean collisionWithTile(int x, int y){
 		return RoomManager.getRoom().getTile(x, y).isSolid();
 	}
+	public boolean collisionWithTile(Tile t){ return t.isSolid(); }
 
 	public float getXInPixels(){
 		return x;

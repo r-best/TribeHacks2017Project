@@ -1,7 +1,17 @@
 <rooms>
 	<room number="1">
-        <row></row>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
         <row>111111</row>
 		<row>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</row>
 	</room>
+    <room number="2">
+        <row/>
+        <row>111</row>
+        <row>111111111111111111111111111111111</row>
+    </room>
 </rooms>

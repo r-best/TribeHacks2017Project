@@ -1,6 +1,7 @@
 <tiles>
     <tile name="null" solid="false" sprite="null.png"/>
     <tile name="wall" solid="true" sprite="wall.png"/>
+    <tile name="grass" solid="false" sprite="grass.png"/>
     <tile name="rock" solid="true" sprite="rock.png"/>
     <tile name="dirt" solid="false" sprite="dirt.png"/>
 </tiles>
