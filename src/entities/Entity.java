@@ -35,11 +35,11 @@ public abstract class Entity {
 	 * @param x starting X position in tileData
 	 * @param y starting Y position in tileData
 	 */
-	public Entity(int x, int y, Animation[] anims, ArrayList<Event> events){
+	public Entity(int x, int y, int width, int height, Animation[] anims, ArrayList<Event> events){
 		this.x = x * Tile.width;
 		this.y = y * Tile.height;
-		this.width = (int)(DEFAULT_WIDTH*Preferences.scale);
-		this.height = (int)(DEFAULT_HEIGHT*Preferences.scale);
+		this.width = (int)(width*Preferences.scale);
+		this.height = (int)(height*Preferences.scale);
 		boundsXOffset = (int)(this.width*.3);
 		boundsYOffset = (int)(this.height*.3);
 		bounds = new Rectangle((int)(this.x + boundsXOffset), (int)(this.y + boundsYOffset), (int)(this.width*.4), (int)(this.height*.6));
@@ -50,8 +50,8 @@ public abstract class Entity {
 		else
 			this.events = new ArrayList<>();
 	}
-	public Entity(int x, int y, Animation[] anims){
-		this(x, y, anims, null);
+	public Entity(int x, int y, int width, int height, Animation[] anims){
+		this(x, y, width, height, anims, null);
 	}
 
 	public void update(){
@@ -68,7 +68,7 @@ public abstract class Entity {
 	public void draw(Graphics2D graphics){
 		graphics.drawImage(currentFrame, (int)(x + Camera.getXOffset()), (int)(y + Camera.getYOffset()), null);
 		//draw hitbox (for debugging)
-		//graphics.fillRect(bounds.x + (int)Camera.getXOffset(), bounds.y + (int)Camera.getYOffset(), bounds.width, bounds.height);
+		graphics.fillRect(bounds.x + (int)Camera.getXOffset(), bounds.y + (int)Camera.getYOffset(), bounds.width, bounds.height);
 	}
 
 	public void jump(){

@@ -23,8 +23,6 @@ public class Assets {
 
 	public static Font timesNewRoman;
 
-	public static final int spriteWidth = 50, spriteHeight = 50;
-
 	private static HashMap<String, String[]> dialogue;
 	private static HashMap<String, Animation[]> entityAnims;
 
@@ -72,7 +70,8 @@ public class Assets {
 		}*/
 		createAnimation(path, "player.png", 2, 4, 50, 50);
 		createAnimation(path, "playerAttack.png", 2, 4, 50, 50);
-		createAnimation(path, "toddhoward.png", 2, 1, 241, 245);
+		createAnimation(path, "toddhoward.png", 2, 1, 100, 100);
+		createAnimation(path, "bullet.png", 2, 1, 10, 10);
 	}
 
 	public static void createAnimation(String path, String itemName, int rows, int columns, int width, int height){

@@ -12,7 +12,7 @@ public class Player extends CombatableEntity {
 	public static Player getInstance(){ return instance; }
 
 	private Player() {
-		super(0, 0, Assets.getEntityAnimation("player"), Assets.getEntityAnimation("playerAttack"));
+		super(0, 0, 50, 50, Assets.getEntityAnimation("player"), Assets.getEntityAnimation("playerAttack"));
 	}
 
 	@Override
@@ -25,8 +25,6 @@ public class Player extends CombatableEntity {
 			currentFrame = getCurrentAnimationFrame();
 		if(!attacking && KeyManager.checkKeyAndReset(KeyEvent.VK_E))
 			attack(1);
-
-
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public class NPC extends Entity {
 	private boolean direction;
 
 	public NPC(int x, int y, Animation[] anims, ArrayList<Event> events){
-		super(x, y, anims, events);
+		super(x, y, 50, 50, anims, events);
 	}
 
 	public NPC(int x, int y, Animation[] anims){

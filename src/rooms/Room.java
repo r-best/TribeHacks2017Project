@@ -49,6 +49,8 @@ public class Room {
 		return tiles[x][y];
 	}
 
+	public void addEntity(Entity ent){ entities.addEntity(ent); }
+
 	public ArrayList<Entity> getEntities(){
 		return entities.getEntities();
 	}
