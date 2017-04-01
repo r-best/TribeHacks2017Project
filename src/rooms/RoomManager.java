@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import entities.Player;
 import org.w3c.dom.Element;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -30,12 +32,21 @@ public class RoomManager {
 
 				NodeList rows = ((Element)roomData.item(i-1)).getElementsByTagName("row");
 
+				//Find room width
+				int roomWidth = 0;
+				for(int j = 0; j < rows.getLength(); j++){
+					String row = ((Element)rows.item(j)).getTextContent().replaceAll("\\s+", "");
+
+					if(row.length() > roomWidth)
+						roomWidth = row.length();
+				}
+
 				for(int j = 0; j < rows.getLength(); j++){
 					String row = ((Element)rows.item(j)).getTextContent().replaceAll("\\s+", "");
 
 					if(rooms[i].tiles == null){
 						rooms[i].height = rows.getLength();
-						rooms[i].width = row.length();
+						rooms[i].width = roomWidth;
 						rooms[i].tiles = new byte[rooms[i].width][rooms[i].height];
 					}
 
@@ -52,7 +63,7 @@ public class RoomManager {
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		setRoom(2, 1);
+		setRoom(1, 0, -2);
 	}
 
 	public static void update(){
@@ -63,12 +74,14 @@ public class RoomManager {
 		currentRoom.draw(graphics);
 	}
 
-	public static void setRoom(int roomNumber, int doorNumber){
+	public static void setRoom(int roomNumber, int playerNewX, int playerNewY){
 		if(!rooms[roomNumber].initialized){
 			rooms[roomNumber].entityInit(roomNumber);
 		}
 
 		currentRoom = rooms[roomNumber];
+
+		Player.getInstance().moveTo(playerNewX, playerNewY);
 	}
 	public static Room getRoom(){
 		return currentRoom;

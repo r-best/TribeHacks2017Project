@@ -1,12 +1,7 @@
 <rooms>
 	<room number="1">
-		<row>1 1 1 1 1 1 1</row>
-		<row>1 0 0 0 0 0 1</row>
-		<row>1 0 0 0 1 0 1</row>
-		<row>1 0 0 0 0 0 1</row>
-		<row>1 0 0 0 0 0 1</row>
-		<row>1 0 0 0 0 0 1</row>
-		<row>1 1 0 0 1 1 1</row>
-		<door x="2" y="6" destination="2-1" playerspawn="up" />
+        <row></row>
+        <row>111111</row>
+		<row>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</row>
 	</room>
 </rooms>

@@ -15,43 +15,41 @@ import utils.Preferences;
 
 public abstract class Entity {
 	protected Rectangle bounds;
+	public int boundsXOffset, boundsYOffset; //used to shrink the bounds Rectangle into the entity, to reduce the size of the hitbox
 	protected int width, height;
 	public float x, y; //stored in PIXELS, not tiles
-	public boolean isSolid = true; //to determine if the player can collide with this entity (true by default, subclass must define as false)
+	protected double XSpd = 0, YSpd = -1;
+	public boolean isSolid = true; //to determine if other entities can collide with this entity (true by default, subclass must define as false)
 
 	public static final int DEFAULT_WIDTH = 50, DEFAULT_HEIGHT = 50;
-	protected double XSpd, YSpd;
 	protected int direction;
-	protected Animation anims[];//animUp, animDown, animRight, animLeft;
+	protected Animation anims[];//animUp, animDown;
 	protected BufferedImage tempAnim, currentFrame;
-	public int boundsXOffset, boundsYOffset; //used to shrink the bounds Rectangle into the entity, to reduce the size of the hitbox
-
 	protected ArrayList<Event> events; //What happens when the player interacts with this entity
+
+	protected boolean grounded = false;
 
 	/**
 	 * @param x starting X position in tiles
 	 * @param y starting Y position in tiles
 	 */
-	public Entity(int x, int y, int width, int height, Animation[] anims){
+	public Entity(int x, int y, Animation[] anims, ArrayList<Event> events){
 		this.x = x * Tile.width;
 		this.y = y * Tile.height;
-		this.width = (int)(width*Preferences.scale);
-		this.height = (int)(height*Preferences.scale);
+		this.width = (int)(DEFAULT_WIDTH*Preferences.scale);
+		this.height = (int)(DEFAULT_HEIGHT*Preferences.scale);
 		boundsXOffset = (int)(this.width*.3);
 		boundsYOffset = (int)(this.height*.3);
 		bounds = new Rectangle((int)(this.x + boundsXOffset), (int)(this.y + boundsYOffset), (int)(this.width*.4), (int)(this.height*.6));
 		this.anims = anims;
-		events = new ArrayList<>();
-	}
-	public Entity(int x, int y, Animation[] anims){
-		this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT, anims);
-	}
-	public Entity(int x, int y, Animation[] anims, ArrayList<Event> events){
-		this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT, anims);
+		tempAnim = anims[0].getFrame(0);
 		if(events != null)
 			this.events = events;
 		else
 			this.events = new ArrayList<>();
+	}
+	public Entity(int x, int y, Animation[] anims){
+		this(x, y, anims, null);
 	}
 
 	public void update(){
@@ -68,7 +66,7 @@ public abstract class Entity {
 	public void draw(Graphics2D graphics){
 		graphics.drawImage(currentFrame, (int)(x + Camera.getXOffset()), (int)(y + Camera.getYOffset()), null);
 		//draw hitbox (for debugging)
-		//graphics.fillRect(bounds.x + (int)Camera.getXOffset(), bounds.y + (int)Camera.getYOffset(), bounds.width, bounds.height);
+		graphics.fillRect(bounds.x + (int)Camera.getXOffset(), bounds.y + (int)Camera.getYOffset(), bounds.width, bounds.height);
 	}
 
 	public void move(){
@@ -76,7 +74,8 @@ public abstract class Entity {
 			moveX();
 			moveY();
 			XSpd = 0;
-			YSpd = 0;
+			if(!grounded)
+				YSpd += .1;
 			bounds.x = (int) x + boundsXOffset;
 			bounds.y = (int) y + boundsYOffset;
 		}
@@ -87,6 +86,7 @@ public abstract class Entity {
 			int tempX = (int)(x + XSpd + boundsXOffset + bounds.width) / Tile.width;
 			if(!collisionWithTile(tempX, (int)(y + boundsYOffset) / Tile.height) &&
 					!collisionWithTile(tempX, (int)(y + boundsYOffset + bounds.height) / Tile.height)){
+				grounded = false;
 				bounds.x += XSpd;
 				x += XSpd;
 				if(collidesWithAnEntity()){
@@ -102,6 +102,7 @@ public abstract class Entity {
 			int tempX = (int)(x + XSpd + boundsXOffset) / Tile.width;
 			if(!collisionWithTile(tempX, (int)(y + boundsYOffset) / Tile.height) &&
 					!collisionWithTile(tempX, (int)(y + boundsYOffset + bounds.height) / Tile.height)){
+				grounded = false;
 				bounds.x += XSpd;
 				x += XSpd;
 				if(collidesWithAnEntity()){
@@ -122,6 +123,7 @@ public abstract class Entity {
 					!collisionWithTile((int)(x + boundsXOffset + bounds.width) / Tile.width, tempY)){
 				bounds.y += YSpd;
 				y += YSpd;
+				grounded = false;
 				if(collidesWithAnEntity()){
 					y -= YSpd;
 					bounds.y -= YSpd;
@@ -129,6 +131,7 @@ public abstract class Entity {
 			}
 			else{
 				y = tempY * Tile.height + Tile.height - boundsYOffset;
+				YSpd = 0;
 			}
 		}
 		else if(YSpd > 0){
@@ -144,6 +147,7 @@ public abstract class Entity {
 			}
 			else{
 				y = tempY * Tile.height - boundsYOffset - bounds.height - 1;
+				grounded = true;
 			}
 		}
 	}
@@ -272,40 +276,14 @@ public abstract class Entity {
 	XSpd and YSpd (AKA which direction it is moving)
 	 */
 	public BufferedImage getCurrentAnimationFrame(){
-		if(XSpd < 0 && YSpd == 0){ //moving left
-			tempAnim = anims[1].getFrame(0);
-			direction = 2;
-			return anims[1].getCurrentFrame();
-		}
-		else if(XSpd > 0 && YSpd == 0){ //moving right
-			tempAnim = anims[3].getFrame(0);
-			direction = 0;
-			return anims[3].getCurrentFrame();
-		}
-		else if(XSpd == 0 && YSpd < 0){ //moving up
+		if(XSpd > 0){ //moving right
 			tempAnim = anims[0].getFrame(0);
-			direction = 1;
+			direction = 0;
 			return anims[0].getCurrentFrame();
 		}
-		else if(XSpd == 0 && YSpd > 0){ //moving down
-			tempAnim = anims[2].getFrame(0);
-			direction = 3;
-			return anims[2].getCurrentFrame();
-		}
-		else if(XSpd > 0 && YSpd > 0){ //moving right & down
-			tempAnim = anims[3].getFrame(0);
-			return anims[3].getCurrentFrame();
-		}
-		else if(XSpd > 0 && YSpd < 0){ //moving right & up
-			tempAnim = anims[3].getFrame(0);
-			return anims[3].getCurrentFrame();
-		}
-		else if(XSpd < 0 && YSpd > 0){ //moving left & down
+		else if(XSpd < 0){ //moving left
 			tempAnim = anims[1].getFrame(0);
-			return anims[1].getCurrentFrame();
-		}
-		else if(XSpd < 0 && YSpd < 0){ //moving left & up
-			tempAnim = anims[1].getFrame(0);
+			direction = 1;
 			return anims[1].getCurrentFrame();
 		}
 		else

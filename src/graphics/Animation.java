@@ -28,11 +28,9 @@ public class Animation {
 	 * creates an array of animations from them and returns it
 	 */
 	public static Animation[] createAnimations(BufferedImage[][] frames){
-		Animation[] anims = new Animation[4];
+		Animation[] anims = new Animation[2];
 		anims[0] = new Animation(150, frames[0]);
 		anims[1] = new Animation(150, frames[1]);
-		anims[2] = new Animation(150, frames[2]);
-		anims[3] = new Animation(150, frames[3]);
 		return  anims;
 	}
 

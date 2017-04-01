@@ -21,12 +21,11 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class Assets {
 
-	public static Font timesNewRoman, papyrus, comicSans;
+	public static Font timesNewRoman;
 
-	public static final int playerSpriteWidth = 50, playerSpriteHeight = 50;
+	public static final int spriteWidth = 50, spriteHeight = 50;
 
 	private static HashMap<String, String[]> dialogue;
-	public static HashMap<String, BufferedImage> enemySprites;
 	private static HashMap<String, Animation[]> entityWalkAnims;
 
 	public static String[] getDialogue(String key){
@@ -35,39 +34,12 @@ public class Assets {
 	public static Animation[] getEntityWalkingAnimation(String key){ return entityWalkAnims.get(key); }
 
 	public static void init() throws FontFormatException, IOException{
-		/*timesNewRoman = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/times new roman.ttf"));
-		papyrus = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/papyrus.ttf"));
-		comicSans = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/comic sans.ttf"));
+		timesNewRoman = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/times new roman.ttf"));
 
 		entityWalkAnims = new HashMap<>();
 		loadWalkAnimations("src/resources");
 
-		enemySprites = new HashMap<>();
-		loadEnemySprites("src/resources");
-
-		textInit();*/
-	}
-
-	private static void loadEnemySprites(String path){
-		File dir = new File(path);
-		if(dir.isDirectory()){
-			for(File f : dir.listFiles()){
-				if(f.isDirectory())
-					loadEnemySprites(f.getPath());
-				else if(f.getName().endsWith(".png") || f.getName().endsWith(".jpg")){
-					if(Preferences.scale != 1.0) {
-						BufferedImage before = loadImage(f.getPath().substring(3).replace('\\', '/'));
-						AffineTransform at = new AffineTransform();
-						at.scale(Preferences.scale, Preferences.scale);
-						AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-						BufferedImage after = new BufferedImage((int) (before.getWidth() * Preferences.scale), (int) (before.getHeight() * Preferences.scale), BufferedImage.TYPE_INT_ARGB);
-						enemySprites.put(f.getName().substring(0, f.getName().length() - 4), op.filter(before, after));
-					}
-					else
-						enemySprites.put(f.getName().substring(0, f.getName().length() - 4), loadImage(f.getPath().substring(3).replace('\\', '/')));
-				}
-			}
-		}
+		textInit();
 	}
 
 	private static void loadWalkAnimations(String path) {
@@ -78,19 +50,19 @@ public class Assets {
 					loadWalkAnimations(f.getPath());
 				if(f.getName().endsWith(".png") || f.getName().endsWith(".jpg")){
 					BufferedImage spriteSheet = loadImage(f.getPath().substring(3).replace('\\', '/'));
-					if(spriteSheet.getWidth() >= playerSpriteWidth*4 && spriteSheet.getHeight() >= playerSpriteHeight*4) {
-						BufferedImage[][] sprite = new BufferedImage[4][4];
-						for (int i = 0; i < 4; i++) {
+					if(spriteSheet.getWidth() >= spriteWidth *4 && spriteSheet.getHeight() >= spriteHeight *2) {
+						BufferedImage[][] sprite = new BufferedImage[2][4];
+						for (int i = 0; i < 2; i++) {
 							for (int j = 0; j < 4; j++) {
 								if (Preferences.scale != 1.0) {
-									BufferedImage before = spriteSheet.getSubimage(playerSpriteWidth * j, playerSpriteHeight * i, playerSpriteWidth, playerSpriteHeight);
+									BufferedImage before = spriteSheet.getSubimage(spriteWidth * j, spriteHeight * i, spriteWidth, spriteHeight);
 									AffineTransform at = new AffineTransform();
 									at.scale(Preferences.scale, Preferences.scale);
 									AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-									BufferedImage after = new BufferedImage((int) (playerSpriteWidth * Preferences.scale), (int) (playerSpriteHeight * Preferences.scale), BufferedImage.TYPE_INT_ARGB);
+									BufferedImage after = new BufferedImage((int) (spriteWidth * Preferences.scale), (int) (spriteHeight * Preferences.scale), BufferedImage.TYPE_INT_ARGB);
 									sprite[i][j] = op.filter(before, after);
 								} else
-									sprite[i][j] = spriteSheet.getSubimage(playerSpriteWidth * j, playerSpriteHeight * i, playerSpriteWidth, playerSpriteHeight);
+									sprite[i][j] = spriteSheet.getSubimage(spriteWidth * j, spriteHeight * i, spriteWidth, spriteHeight);
 							}
 						}
 						entityWalkAnims.put(f.getName().substring(0, f.getName().length() - 4), Animation.createAnimations(sprite));

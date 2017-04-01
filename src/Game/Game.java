@@ -43,7 +43,6 @@ public class Game extends Canvas{
 
 		Assets.init();
 
-		//ItemData.initItems();
 		StateManager.init();
 
 		double delta = 0;
@@ -83,7 +82,7 @@ public class Game extends Canvas{
 			Height = frame.getHeight();
 		}
 
-		//StateManager.update();
+		StateManager.update();
 
 		if(KeyManager.checkKeyWithoutReset(KeyEvent.VK_ESCAPE))
 			Game.stop();
@@ -108,7 +107,7 @@ public class Game extends Canvas{
 		graphics.setColor(new Color(0, 0, 0));
 
 		//Draw here
-		//StateManager.draw(graphics);
+		StateManager.draw(graphics);
 
 		//Stop draw
 		bs.show();
