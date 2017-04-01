@@ -42,7 +42,9 @@ public class Tile {
 		this.keyPressEvents = new ArrayList<>();
 	}
 
-	public void addWalkOverEvent(Event event){ walkOverEvents.add(event); }
+	public void addWalkOverEvent(Event event){
+		walkOverEvents.add(event);
+	}
 	public void addKeyPressEvent(Event event){ keyPressEvents.add(event); }
 
 	public static void tileInit(){
@@ -71,7 +73,8 @@ public class Tile {
 	}
 
 	public void update(int x, int y){
-		if(!walkOverEvents.isEmpty() && Player.getInstance().collisionWithTile(x, y))
+		System.out.println(x + ", "+y);
+		if(!walkOverEvents.isEmpty() && Player.getInstance().getBounds().intersects(new Rectangle(x*Tile.width, y*Tile.height, Tile.width, Tile.height)))
 			walkOverEvents.get(0).trigger();
 
 		if(!keyPressEvents.isEmpty() && Player.getInstance().collisionWithTile(x, y) && KeyManager.checkKeyAndReset(KeyEvent.VK_S))

@@ -75,7 +75,7 @@ public abstract class Entity {
 			moveY();
 			XSpd = 0;
 			if(!grounded)
-				YSpd += .1;
+				YSpd += .07;
 			bounds.x = (int) x + boundsXOffset;
 			bounds.y = (int) y + boundsYOffset;
 		}

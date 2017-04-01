@@ -53,14 +53,14 @@ public class RoomManager {
 					}
 
 					for(int k = 0; k < rooms[i].width; k++){
-						if(k > row.length()-2)
+						if(k > row.length()-1)
 							rooms[i].tiles[k][j] = new Tile(Tile.tileData[0]);
 						else
-							rooms[i].tiles[k][j] = new Tile(Tile.tileData[Integer.parseInt(row.substring(k, k+1))]);//Byte.parseByte(row.substring(k, k+1));
+							rooms[i].tiles[k][j] = new Tile(Tile.tileData[Integer.parseInt(row.charAt(k)+"")]);//Byte.parseByte(row.substring(k, k+1));
 					}
 				}
 
-				/*NodeList tileEvents = document.getElementsByTagName("*");
+				NodeList tileEvents = document.getElementsByTagName("*");
 				for(int j = 0; j < tileEvents.getLength(); j++){
 					Element event = (Element)tileEvents.item(j);
 
@@ -78,7 +78,7 @@ public class RoomManager {
 								t.addWalkOverEvent(e);
 							break;
 					}
-				}*/
+				}
 			}
 		}
 		catch(ParserConfigurationException e){
@@ -88,7 +88,7 @@ public class RoomManager {
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		setRoom(1, 0, -2);
+		setRoom(1, 0, 0);
 	}
 
 	public static void update(){

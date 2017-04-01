@@ -1,5 +1,5 @@
 <rooms>
-	<room number="1">
+	<room>
         <row/>
         <row/>
         <row/>
@@ -8,8 +8,13 @@
         <row/>
         <row>111111</row>
 		<row>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</row>
+        <changeroom x="5" y="3" destRoom="2" destx="0" desty="0"/>
 	</room>
-    <room number="2">
+    <room>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
         <row/>
         <row>111</row>
         <row>111111111111111111111111111111111</row>
