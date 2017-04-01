@@ -68,7 +68,7 @@ public abstract class Entity {
 	public void draw(Graphics2D graphics){
 		graphics.drawImage(currentFrame, (int)(x + Camera.getXOffset()), (int)(y + Camera.getYOffset()), null);
 		//draw hitbox (for debugging)
-		graphics.fillRect(bounds.x + (int)Camera.getXOffset(), bounds.y + (int)Camera.getYOffset(), bounds.width, bounds.height);
+		//graphics.fillRect(bounds.x + (int)Camera.getXOffset(), bounds.y + (int)Camera.getYOffset(), bounds.width, bounds.height);
 	}
 
 	public void jump(){
@@ -103,6 +103,8 @@ public abstract class Entity {
 			}
 			else{
 				x = tempX * Tile.width - boundsXOffset - bounds.width - 1;
+				if(this instanceof ToddHoward)
+					jump();
 			}
 		}
 		else if(XSpd < 0){
@@ -119,6 +121,8 @@ public abstract class Entity {
 			}
 			else{
 				x = tempX * Tile.width + Tile.width - boundsXOffset;
+				if(this instanceof ToddHoward)
+					jump();
 			}
 		}
 	}

@@ -50,7 +50,7 @@ public class Stranger extends Event{
 			delay-=2;
 		else {
 			//RoomManager.getRoom().addEntity(new Projectile((x + stranger.getWidth() / 2)/ Tile.width, (y + stranger.getHeight() / 2)/Tile.height));
-			Player.getInstance().damage(80);
+			Player.getInstance().directDamage(40);
 			finish();
 		}
 	}

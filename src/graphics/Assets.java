@@ -70,7 +70,7 @@ public class Assets {
 		}*/
 		createAnimation(path, "player.png", 2, 4, 50, 50);
 		createAnimation(path, "playerAttack.png", 2, 4, 50, 50);
-		createAnimation(path, "toddhoward.png", 2, 1, 100, 100);
+		createAnimation(path, "toddhoward.png", 2, 1, 75, 75);
 		createAnimation(path, "bullet.png", 2, 1, 10, 10);
 	}
 

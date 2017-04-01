@@ -87,6 +87,8 @@ public abstract class CombatableEntity extends Entity{
 					attackTimer = 37;
 				}
 				break;
+			case 2:
+				break;
 		}
 	}
 
@@ -102,6 +104,16 @@ public abstract class CombatableEntity extends Entity{
 			if (currentHP <= 0)
 				defeat();
 		}
+	}
+
+	/**
+	 * Avoids the damage cooldown timer
+	 */
+	public void directDamage(int damage){
+		currentHP -= damage;
+
+		if (currentHP <= 0)
+			defeat();
 	}
 
 	public void heal(int heal){

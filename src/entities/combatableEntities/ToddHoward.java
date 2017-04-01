@@ -20,7 +20,7 @@ public class ToddHoward extends CombatableEntity {
 	double maxSpd = 3 * Preferences.scale;
 
 	public ToddHoward(int x, int y) {
-		super(x, y, 100, 100,/*241, 245,*/ Assets.getEntityAnimation("toddhoward"), Assets.getEntityAnimation("toddhoward"));
+		super(x, y, 75, 75,/*241, 245,*/ Assets.getEntityAnimation("toddhoward"), Assets.getEntityAnimation("toddhoward"));
 
 		toddHPBar = new Rectangle(
 				(int)(Game.getGameWidth()*.2),
@@ -35,7 +35,7 @@ public class ToddHoward extends CombatableEntity {
 	public void attack(int attackType) {
 		super.attack(attackType);
 
-		if(new Random().nextInt(100) > 85)
+		if(new Random().nextInt(100) > 90)
 			new Stranger(Game.getGameWidth()/2, Game.getGameHeight()/2).trigger();
 	}
 
@@ -63,13 +63,15 @@ public class ToddHoward extends CombatableEntity {
 
 		if(!attacking && (Math.abs(getXInPixels() - (px+pwidth)) < 3 || Math.abs(px - (getXInPixels()+width)) < 3)){
 			System.out.println("True");
-			if(grounded && py < getYInPixels()-height/2)
+			if(grounded && py < getYInPixels())
 				jump();
 			attack(1);
 		}
 
 		if(Player.getInstance().meleeHitbox != null && bounds.intersects(Player.getInstance().meleeHitbox))
-			damage(10);
+			damage(3);
+		if(meleeHitbox != null && meleeHitbox.intersects(Player.getInstance().getBounds()))
+			Player.getInstance().damage(10);
 
 		toddHPBarFill.setBounds(
 				(int)(toddHPBar.x+toddHPBar.width*(((maxHP-currentHP)/maxHP)/2)),
@@ -86,7 +88,7 @@ public class ToddHoward extends CombatableEntity {
 		g.setColor(Color.white);
 		g.draw(toddHPBar);
 		//Health Gradient
-		GradientPaint health = new GradientPaint(0,0, new Color(128,30,30),60, 0,Color.red, true);
+		GradientPaint health = new GradientPaint(0,0, new Color(128,30,30),0, 20,Color.red, true);
 		g.setPaint(health);
 		g.fill(toddHPBarFill);
 	}

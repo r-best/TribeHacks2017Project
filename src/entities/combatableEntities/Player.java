@@ -1,6 +1,8 @@
 package entities.combatableEntities;
 
 import graphics.Assets;
+import states.LoseState;
+import states.StateManager;
 import utils.KeyManager;
 import utils.Preferences;
 import java.awt.event.KeyEvent;
@@ -29,7 +31,7 @@ public class Player extends CombatableEntity {
 
 	@Override
 	public void defeat() {
-		System.out.println("Game over");
+		StateManager.push(new LoseState());
 	}
 
 	/**
