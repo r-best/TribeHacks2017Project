@@ -21,7 +21,7 @@ In the future I hope to implement a wider variety of attacks for both Todd and t
   - Sets the game's target FPS, use with caution
 - **spawn [entity name] [x] [y]**
   - Spawns the given entity at the given x and y coordinates
-  - Current compatible entities are 'npc' and 'tom'
+  - Current compatible entities are 'npc' and 'todd'
 - **event [type] [args...]**
   - Initiates an event of the given type with the given parameters
   - Only current compatible type is 'dialogue'; all args following will become part of the text box content
