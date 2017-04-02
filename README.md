@@ -28,3 +28,4 @@ In the future I hope to implement a wider variety of attacks for both Todd and t
 
 ### Special Thanks to:
 - Todd Howard
+- [The McElroy brothers](https://www.youtube.com/watch?v=_1jGnFt78H8)
