@@ -3,5 +3,7 @@
     <text id="NPC DIALOGUE 2">2: Hello!/2: This is a test of NPC dialogue.</text>
     <text id="DIALOGUE TEST 1">This is some really long dialogue to test word wrapping. I'm not sure if it'll work but I'll give it a shot. If it doesn't work I'm sure I'll be able to fix it. This is some really long dialogue to test word wrapping. I'm not sure if it'll work but I'll give it a shot. If it doesn't work I'm sure I'll be able to fix it. This is some really long dialogue to test word wrapping. I'm not sure if it'll work but I'll give it a shot. If it doesn't work I'm sure I'll be able to fix it. This is some really long dialogue to test word wrapping. I'm not sure if it'll work but I'll give it a shot. If it doesn't work I'm sure I'll be able to fix it./Hi!/Hi2!</text>
 
-    <text id="SHOP TEXT 1">What would you like to buy?</text>
+    <text id="WARNING 1">Are you here to challenge Todd?/ He's right through here, good luck! (you'll need it)</text>
+    <text id="WARNING 2">Are you sure you want to do this?</text>
+    <text id="WARNING 3">I hope you've thought this through</text>
 </dialogue>

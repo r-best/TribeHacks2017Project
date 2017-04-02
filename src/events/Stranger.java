@@ -1,11 +1,7 @@
 package events;
 
-import entities.Projectile;
 import entities.combatableEntities.Player;
 import graphics.Assets;
-import rooms.RoomManager;
-import rooms.Tile;
-
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;

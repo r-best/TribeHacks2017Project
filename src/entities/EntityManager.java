@@ -81,8 +81,8 @@ public class EntityManager {
 					case "npc":
 						addEntity(new NPC(Integer.parseInt(entity.getAttribute("x")),
 								Integer.parseInt(entity.getAttribute("y")),
-								Assets.getEntityAnimation(entity.getAttribute("anim")),
-								events));
+								events,
+								Boolean.parseBoolean(entity.getAttribute("wander"))));
 						break;
 					case "todd":
 						addEntity(new ToddHoward(Integer.parseInt(entity.getAttribute("x")),

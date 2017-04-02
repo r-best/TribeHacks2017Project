@@ -60,7 +60,7 @@ public class RoomManager {
 					}
 				}
 
-				NodeList tileEvents = document.getElementsByTagName("*");
+				NodeList tileEvents = ((Element)roomData.item(i-1)).getElementsByTagName("*");
 				for(int j = 0; j < tileEvents.getLength(); j++){
 					Element event = (Element)tileEvents.item(j);
 

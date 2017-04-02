@@ -82,6 +82,10 @@ public class Tile {
 
 	public void draw(Graphics2D graphics, int x, int y){
 		graphics.drawImage(texture, (int)(x*Tile.width + Camera.getXOffset()), (int)(y*Tile.height + Camera.getYOffset()), width, height, null);
+		if(!walkOverEvents.isEmpty()) {
+			graphics.setColor(Color.ORANGE);
+			graphics.fill(new Rectangle((int) (x * Tile.width + Camera.getXOffset()), (int) (y * Tile.height + Camera.getYOffset()), Tile.width, Tile.height));
+		}
 	}
 
 	public boolean isSolid(){

@@ -62,10 +62,10 @@ public class ToddHoward extends CombatableEntity {
 		}
 
 		if(!attacking && (Math.abs(getXInPixels() - (px+pwidth)) < 3 || Math.abs(px - (getXInPixels()+width)) < 3)){
-			System.out.println("True");
 			if(grounded && py < getYInPixels())
 				jump();
-			attack(1);
+			if(Math.abs(py - getYInPixels()) < 300)
+				attack(1);
 		}
 
 		if(Player.getInstance().meleeHitbox != null && bounds.intersects(Player.getInstance().meleeHitbox))

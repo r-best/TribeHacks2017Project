@@ -2,6 +2,7 @@ package states;
 
 import Game.Game;
 import entities.NPC;
+import entities.combatableEntities.ToddHoward;
 import events.DialogueEvent;
 import graphics.Assets;
 import graphics.gui.TextInputBox;
@@ -69,17 +70,24 @@ public class DebugConsole implements State{
 				break;
 			case "spawn":
 				if(tokens.length < 4){
-					showMessage("Format: spawn [ENTITY] [X] [Y] (SPRITE)");
+					showMessage("Format: spawn [ENTITY] [X] [Y]");
 					break;
 				}
 				if(!(StateManager.peek(1) instanceof GameState)){
 					showMessage("Must be in game to use this command");
 					break;
 				}
-				if(tokens.length >= 5)
-					RoomManager.getRoom().getEntities().add(new NPC(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Assets.getEntityAnimation(tokens[4])));
-				else
-					RoomManager.getRoom().getEntities().add(new NPC(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Assets.getEntityAnimation("npc")));
+				switch(tokens[1]){
+					case "npc":
+						RoomManager.getRoom().getEntities().add(new NPC(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])));
+						break;
+					case "todd":
+						RoomManager.getRoom().getEntities().add(new ToddHoward(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])));
+						break;
+					default:
+						showMessage("Entity '" +tokens[1]+ "' not recognized");
+						break;
+				}
 				showMessage("Spawned " +tokens[1]);
 				break;
 			default:
