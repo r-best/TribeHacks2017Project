@@ -1,7 +1,9 @@
 package states;
 
 import Game.Game;
+import entities.Entity;
 import entities.NPC;
+import entities.combatableEntities.Player;
 import entities.combatableEntities.ToddHoward;
 import events.DialogueEvent;
 import graphics.Assets;
@@ -70,25 +72,91 @@ public class DebugConsole implements State{
 				break;
 			case "spawn":
 				if(tokens.length < 4){
-					showMessage("Format: spawn [ENTITY] [X] [Y]");
+					showMessage("Format: spawn [ENTITY] [X] [Y] [QUANTITY]");
 					break;
 				}
 				if(!(StateManager.peek(1) instanceof GameState)){
 					showMessage("Must be in game to use this command");
 					break;
 				}
-				switch(tokens[1]){
-					case "npc":
-						RoomManager.getRoom().getEntities().add(new NPC(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])));
+				int quantity = 1;
+				if(tokens.length >= 5)
+					quantity = Integer.parseInt(tokens[4]);
+				for(int i = 0; i < quantity; i++){
+					switch (tokens[1]) {
+						case "npc":
+							RoomManager.getRoom().getEntities().add(new NPC(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]) - i*2));
+							showMessage("Spawned " + tokens[1]);
+							break;
+						case "todd":
+							RoomManager.getRoom().getEntities().add(new ToddHoward(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]) - i*2));
+							showMessage("Spawned " + tokens[1]);
+							break;
+						default:
+							showMessage("Entity '" + tokens[1] + "' not recognized");
+							break;
+					}
+				}
+				break;
+			case "gravity":
+				if(tokens.length < 2){
+					showMessage("Format: gravity [arg]");
+					break;
+				}
+				switch (tokens[1]){
+					case "restore":
+						Entity.gravity = 0.4;
 						break;
-					case "todd":
-						RoomManager.getRoom().getEntities().add(new ToddHoward(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])));
+					case "magnify":
+						if(tokens.length < 3){
+							showMessage("Format: gravity magnify [MULTIPLIER]");
+							break;
+						}
+						Entity.gravity *= Double.parseDouble(tokens[2]);
+						break;
+					case "reverse":
+						Entity.gravity = -Entity.gravity;
+						break;
+					case "zero":
+						Entity.gravity = 0;
 						break;
 					default:
-						showMessage("Entity '" +tokens[1]+ "' not recognized");
+						showMessage("Token '" + tokens[1] + "' not recognized");
 						break;
 				}
-				showMessage("Spawned " +tokens[1]);
+				break;
+			case "player":
+				if(tokens.length < 2){
+					showMessage("Format: player [arg]");
+					break;
+				}
+				switch (tokens[1]){
+					case "flipcontrols":
+						int temp = Player.UpKey;
+						Player.UpKey = Player.DownKey;
+						Player.DownKey = temp;
+						temp = Player.LeftKey;
+						Player.LeftKey = Player.RightKey;
+						Player.RightKey = temp;
+						break;
+					case "multiplyspeed":
+						if(tokens.length < 3){
+							showMessage("Format: player multiplySpeed [MULTIPLIER]");
+							break;
+						}
+						Player.SPEED *= Double.parseDouble(tokens[2]);
+						break;
+					case "multiplyjump":
+						if(tokens.length < 3){
+							showMessage("Format: player multiplyJump [MULTIPLIER]");
+							break;
+						}
+						Player.getInstance().JUMPMULT *= Double.parseDouble(tokens[2]);
+						break;
+					default:
+						showMessage("Token '" + tokens[1] + "' not recognized");
+						break;
+				}
 				break;
 			default:
 				showMessage("Command '" +tokens[0]+ "' not recognized");

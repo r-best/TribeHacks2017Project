@@ -9,6 +9,9 @@ import java.awt.event.KeyEvent;
 
 public class Player extends CombatableEntity {
 
+	public static double SPEED = 3;
+	public static int UpKey = KeyEvent.VK_W, DownKey = KeyEvent.VK_S, LeftKey = KeyEvent.VK_A, RightKey = KeyEvent.VK_D;
+
 	private static Player instance = new Player();
 
 	public static Player getInstance(){ return instance; }
@@ -39,17 +42,14 @@ public class Player extends CombatableEntity {
 	 what keys are being pressed
 	 */
 	public void setPlayerMovement(){
-		int W = KeyEvent.VK_W, A = KeyEvent.VK_A, S = KeyEvent.VK_S, D = KeyEvent.VK_D;
-		int UP = KeyEvent.VK_UP, LEFT = KeyEvent.VK_LEFT, RIGHT = KeyEvent.VK_RIGHT;
-
 		if(grounded)
-			if (KeyManager.checkKeyWithoutReset(W) || KeyManager.checkKeyWithoutReset(UP) || KeyManager.checkKeyWithoutReset(KeyEvent.VK_SPACE))
+			if (KeyManager.checkKeyWithoutReset(UpKey) || KeyManager.checkKeyWithoutReset(KeyEvent.VK_SPACE))
 				jump();
 
-		if(KeyManager.checkKeyWithoutReset(A) || KeyManager.checkKeyWithoutReset(LEFT))
-			XSpd = -3 * Preferences.scale;
-		if(KeyManager.checkKeyWithoutReset(D) || KeyManager.checkKeyWithoutReset(RIGHT))
-			XSpd = 3 * Preferences.scale;
+		if(KeyManager.checkKeyWithoutReset(LeftKey))
+			XSpd = -SPEED * Preferences.scale;
+		if(KeyManager.checkKeyWithoutReset(RightKey))
+			XSpd = SPEED * Preferences.scale;
 
 		if(KeyManager.checkKeyWithoutReset(KeyEvent.VK_SHIFT)){
 			XSpd *= 2;

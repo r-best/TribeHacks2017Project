@@ -13,10 +13,10 @@ import java.util.Arrays;
  * Created by Bobby on 11/17/2016.
  */
 public class DialogueEvent extends Event{
-	private String[] text;
-	private int dialogueIndex, charIndex;
-	private String currentChars;
-	private long lastChange;
+	protected String[] text;
+	protected int dialogueIndex, charIndex;
+	protected String currentChars;
+	protected long lastChange;
 
 	public DialogueEvent(String text[]){
 		super();
@@ -24,11 +24,6 @@ public class DialogueEvent extends Event{
 		currentChars = text[0].charAt(0)+"";
 		charIndex = 1;
 		lastChange = System.nanoTime();
-	}
-
-	@Override
-	public void trigger(){
-		super.trigger();
 	}
 
 	@Override

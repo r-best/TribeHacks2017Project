@@ -29,7 +29,10 @@ public abstract class Entity {
 	protected BufferedImage tempAnim, currentFrame;
 	protected ArrayList<Event> events; //What happens when the player interacts with this entity
 
+	public static double gravity = 0.4;
+
 	protected boolean grounded = false;
+	public double JUMPMULT = 1;
 
 	/**
 	 * @param x starting X position in tileData
@@ -72,7 +75,7 @@ public abstract class Entity {
 	}
 
 	public void jump(){
-		YSpd = -10 * Preferences.scale;
+		YSpd = -10 * JUMPMULT * Preferences.scale;
 	}
 
 	public void move(){
@@ -82,7 +85,7 @@ public abstract class Entity {
 			if(!(this instanceof ToddHoward))
 				XSpd = 0;
 			if(!grounded)
-				YSpd += .4 * Preferences.scale;
+				YSpd += gravity * Preferences.scale;
 			bounds.x = (int) x + boundsXOffset;
 			bounds.y = (int) y + boundsYOffset;
 		}
